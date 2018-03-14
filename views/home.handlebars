@@ -1,0 +1,35 @@
+<h2>HTML Table</h2>
+
+<table>
+  <tr>
+    <th>name</th>
+    <th>age</th>
+    <th>city</th>
+  </tr>
+  <tbody id="vehicleList">
+  </tbody>
+</table>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+      refreshTable();
+  });
+
+  function refreshTable(){
+      $.getJSON('http://localhost:5789/all', function(data) {
+          console.log(data);
+          var vehicleListData = '';
+          $.each(data, function(key, value) {
+              vehicleListData += '<tr id="rowVehicleStatus" class="">';
+              vehicleListData += '<td>'+value.name+'</td>';
+              vehicleListData += '<td>'+value.age+'</td>';
+              vehicleListData += '<td>'+value.city+'</td>';
+              vehicleListData += '</tr>';     
+          });
+
+          // We use .html instead of .append here, to make sure we don't add the same
+          // entries when the interval is ran for the n-th time.
+          $('#vehicleList').html(vehicleListData);
+      });
+  }
+</script>
